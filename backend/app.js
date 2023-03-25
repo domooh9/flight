@@ -1,3 +1,4 @@
+
 const express = require('express');
 const cors = require('cors');
 const sqlite3 = require('sqlite3').verbose();
@@ -77,11 +78,28 @@ app.post('/signin', (req, res) => {
 });
 
 app.post('/forgot-password', (req, res) => {
-  // Logic to handle forgot password request
-  const message = { success: true, message: 'Password reset instructions sent to your email' };
+  // Get the user data from the request body
+  const { name, email, password } = req.body;
 
-  // Send the message object as a JSON response
-  res.json(message);
+  // Check if the name and email exist in the database
+  const sql = `SELECT * FROM users WHERE name = ? AND email = ?`;
+  db.get(sql, [name, email], (err, row) => {
+    if (err) throw err;
+
+    // If the user exists in the database, update their password and send a success message as a JSON response
+    if (row) {
+      const sqlUpdate = `UPDATE users SET password = ? WHERE id = ?`;
+      db.run(sqlUpdate, [password, row.id], (err) => {
+        if (err) throw err;
+        const message = { success: true, message: 'Password updated successfully' };
+        res.json(message);
+      });
+    } else {
+      // If the user does not exist in the database, send an error message as a JSON response
+      const message = { success: false, message: 'Invalid name or email' };
+      res.status(401).json(message);
+    }
+  });
 });
 
 // Start the server

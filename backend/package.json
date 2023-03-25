@@ -1,0 +1,29 @@
+{
+  "name": "backend",
+  "version": "16.13.2",
+  "description": "backend for FlyM",
+  "main": "index.js",
+  "scripts": {
+    "test": "error",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://git@github.com/domooh9/flight-booking-system.git"
+  },
+  "keywords": [
+    "backend"
+  ],
+  "author": "dom",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/domooh9/flight-booking-system/issues"
+  },
+  "homepage": "https://github.com/domooh9/flight-booking-system#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "mysql": "^2.18.1",
+    "sqlite3": "^5.1.6"
+  }
+}
